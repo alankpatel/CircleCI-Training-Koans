@@ -7,18 +7,19 @@ jobs:
     steps:
       - checkout
       # Uncomment below and set the key to point to the proper file
-      #- restore_cache:
-          #name: Restore Yarn Package Json Cache
-          #keys:            
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - v3yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn install --immutable
-      # Uncomment below and set the key to point to the proper file
-      #- save_cache:
-          #name: Save Yarn Package Json Cache
-          #key: 
-          #paths:
-            #- ~/.cache/yarn
+      # change the versions from v1 to v3 to access the different caches and or incremenet to start from scratch
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: v3yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
 workflows:
   cache-save-and-restore:
