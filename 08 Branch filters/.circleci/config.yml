@@ -19,6 +19,7 @@ jobs:
     steps:
       - checkout
       - run: echo "Deploy complete"
+      # adding comment in order to test commit for production
 
 workflows:
   version: 2
@@ -31,3 +32,6 @@ workflows:
       - deploy:
           requires:
             - test-production
+          filters:
+            branches:
+              only: production
